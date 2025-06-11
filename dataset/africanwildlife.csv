@@ -34,7 +34,8 @@ filter(?eats != owl:Nothing)
       }
     ]
   }
-}"
+}
+"
 awo_2,which animal is a herbivore?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
@@ -348,7 +349,7 @@ filter not exists {
     ]
   }
 }"
-,"What is defined as being a part of a tree?
+awo_15,"What is defined as being a part of a tree?
 ","PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
@@ -382,7 +383,7 @@ WHERE {
     ]
   }
 }"
-,"Which plant is defined as having no branches?
+awo_16,"Which plant is defined as having no branches?
 ","PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
