@@ -1,0 +1,419 @@
+No.,CQ,SPARQL,Result NLP,Metadata JSON
+awo_1,Which animal eats which other animal?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+select distinct *
+where
+{
+?eats rdfs:subClassOf :animal, [
+a owl:Restriction ;
+owl:onProperty :eats;
+owl:someValuesFrom ?eaten
+] .
+?eaten rdfs:subClassOf :animal .
+filter(?eats != owl:Nothing)
+}",The lion eats the impala.,"{
+  ""head"": {
+    ""vars"": [
+      ""eats"",
+      ""eaten""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""eats"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#lion""
+        },
+        ""eaten"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#Impala""
+        }
+      }
+    ]
+  }
+}"
+awo_2,which animal is a herbivore?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+select ?x
+where
+{
+?x rdfs:subClassOf :animal, :herbivore .
+}",Elephant is a herbivore,"""{
+  """"head"""": {
+    """"vars"""": [
+      """"x""""
+    ]
+  },
+  """"results"""": {
+    """"bindings"""": [
+      {
+        """"x"""": {
+          """"type"""": """"uri"""",
+          """"value"""": """"http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#Elephant""""
+        }
+      },
+      {
+        """"x"""": {
+          """"type"""": """"uri"""",
+          """"value"""": """"http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#herbivore""""
+        }
+      },
+      {
+        """"x"""": {
+          """"type"""": """"bnode"""",
+          """"value"""": """"node5443""""
+        }
+      }
+    ]
+  }
+}"""
+awo_3,Which plant parts does [this omnivorous or herbivorourus animal] eat?,"#Which plant parts does [this omnivorous or herbivorourus animal] eat?
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+select distinct *
+where
+{
+?eats rdfs:subClassOf :plant, [
+a owl:Restriction ;
+owl:onProperty :eats;
+owl:someValuesFrom ?animal
+] .
+?animal a :animal .
+#filter(?eats != owl:Nothing)
+}",,"{
+  ""head"": {
+    ""vars"": [
+      ""eats"",
+      ""animal""
+    ]
+  },
+  ""results"": {
+    ""bindings"": []
+  }
+}"
+awo_4,Does a lion eat plants or plant parts?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+select *
+where
+{
+:lion rdfs:subClassOf [
+a owl:Restriction ;
+owl:onProperty :eats ;
+owl:someValuesFrom [
+owl:unionOf (:plant :PlantParts)
+]
+] .
+}","No, a lion does not eat plants or plant parts.","{
+  ""head"": {
+    ""vars"": []
+  },
+  ""results"": {
+    ""bindings"": []
+  }
+}"
+awo_5,Is there an animal that does not drink water?,"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+# ""ex"" is a hypothetical prefix for a property that does not exist in the ontology
+PREFIX ex: <http://example.org/ontology#>
+
+ASK WHERE {
+  ?animal rdf:type :animal ;
+          ex:needsToDrinkWater ""false""^^xsd:boolean .
+}","No, there is no animal which doesn't drink water","{
+  ""head"": {},
+  ""boolean"": false
+}"
+awo_6,Which plants eat animals?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+select distinct ?eats
+where
+{
+?eats rdfs:subClassOf :plant, [
+a owl:Restriction ;
+owl:onProperty :eats;
+owl:someValuesFrom :animal
+] .
+filter(?eats != owl:Nothing)
+}",CarnivorousPlant eats animals,"{
+  ""head"": {
+    ""vars"": [
+      ""eats""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""eats"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#CarnivorousPlant""
+        }
+      }
+    ]
+  }
+}"
+awo_7,Which animals eat the Impalas?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+select distinct *
+where
+{
+?eats rdfs:subClassOf :animal, [
+a owl:Restriction ;
+owl:onProperty :eats;
+owl:someValuesFrom :Impala
+] .
+filter(?eats != owl:Nothing)
+}",lion eats the impalas,"{
+  ""head"": {
+    ""vars"": [
+      ""eats""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""eats"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#lion""
+        }
+      }
+    ]
+  }
+}"
+awo_8,Which animals are the predators of Impala?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+select distinct *
+where
+{
+?eats rdfs:subClassOf :animal, [
+a owl:Restriction ;
+owl:onProperty :eats;
+owl:someValuesFrom :Impala
+] .
+filter(?eats != owl:Nothing)
+}",lions are the predators of Impala,"{
+  ""head"": {
+    ""vars"": [
+      ""eats""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""eats"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#lion""
+        }
+      }
+    ]
+  }
+}"
+awo_9,Are there impala in africa?,"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+ASK WHERE {
+  :Impala rdfs:comment ?comment .
+  FILTER(CONTAINS(LCASE(?comment), ""african""))
+}","Yes, Impala are in africa","{
+  ""head"": {},
+  ""boolean"": true
+}"
+awo_10,Which country do I have to visit to see giraffe?,"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+# ""ex"" is a hypothetical prefix for properties that do not exist in the ontology
+PREFIX ex: <http://example.org/ontology#>
+
+SELECT ?country
+WHERE {
+    :giraffe ex:locatedIn ?country .
+}","Sorry, I don't have any information about giraffe","{
+  ""head"": {
+    ""vars"": [
+      ""country""
+    ]
+  },
+  ""results"": {
+    ""bindings"": []
+  }
+}"
+awo_11,In what kind of habitat do giraff live?,"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+# ""ex"" is a hypothetical prefix for a property that does not exist in the ontology
+PREFIX ex: <http://example.org/ontology#>
+
+SELECT ?habitatDescription
+WHERE {
+    :giraffe ex:hasHabitat ?habitatDescription .
+}","Sorry, I don't have any information about giraffe","{
+  ""head"": {
+    ""vars"": [
+      ""habitatDescription""
+    ]
+  },
+  ""results"": {
+    ""bindings"": []
+  }
+}"
+awo_12,Which animals are endangered?,"PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+SELECT DISTINCT ?prey
+WHERE {
+  # The predator is either an animal or a plant
+  { ?predator rdfs:subClassOf* :animal . }
+  UNION
+  { ?predator rdfs:subClassOf* :plant . }
+  
+  # The predator eats some prey
+  ?predator rdfs:subClassOf [
+    rdf:type owl:Restriction ;
+    owl:onProperty :eats ;
+    owl:someValuesFrom ?prey
+  ] .
+  
+  # The prey must be a type of animal
+  ?prey rdfs:subClassOf* :animal .
+}",Impalas are endangered,"{
+  ""head"": {
+    ""vars"": [
+      ""prey""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""prey"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#Impala""
+        }
+      },
+      {
+        ""prey"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#animal""
+        }
+      }
+    ]
+  }
+}"
+awo_13,Do giraffe and Elephant live in the same habitat?,"PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+# ""ex"" is a hypothetical prefix for a property that does not exist in the ontology
+PREFIX ex: <http://example.org/ontology#>
+
+ASK WHERE {
+    :giraffe ex:hasHabitat ?habitat .
+    :Elephant ex:hasHabitat ?habitat .
+}",No giraffe and Elephant do not live in the same habitat,"{
+  ""head"": {},
+  ""boolean"": false
+}"
+awo_14,Are there animals that are carnivore but still eat some plants or parts of plants?,"prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+select * 
+where
+{
+filter not exists {
+ :carnivore owl:disjointWith [
+        a owl:Restriction ;
+        owl:onProperty :eats ;
+        owl:someValuesFrom [
+        owl:unionOf (:plant :PlantParts)
+        ]
+        ] .
+        }
+}",I do not have any information about it,"{
+  ""head"": {
+    ""vars"": []
+  },
+  ""results"": {
+    ""bindings"": [
+      {}
+    ]
+  }
+}"
+,"What is defined as being a part of a tree?
+","PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+SELECT ?part
+WHERE {
+  ?part rdfs:subClassOf [
+    owl:onProperty :is-part-of ;
+    owl:someValuesFrom :tree
+  ] .
+}",branch is part of tree,"{
+  ""head"": {
+    ""vars"": [
+      ""part""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""part"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#branch""
+        }
+      },
+      {
+        ""part"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#branch""
+        }
+      }
+    ]
+  }
+}"
+,"Which plant is defined as having no branches?
+","PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#>
+
+SELECT ?plant
+WHERE {
+  ?plant rdfs:subClassOf :plant ;
+         rdfs:subClassOf [
+           owl:onProperty :has-part ;
+           owl:someValuesFrom [ owl:complementOf :branch ]
+         ] .
+}",Palmtree has no branches,"{
+  ""head"": {
+    ""vars"": [
+      ""plant""
+    ]
+  },
+  ""results"": {
+    ""bindings"": [
+      {
+        ""plant"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#Palmtree""
+        }
+      },
+      {
+        ""plant"": {
+          ""type"": ""uri"",
+          ""value"": ""http://www.meteck.org/teaching/ontologies/AfricanWildlifeOntology1.owl#Palmtree""
+        }
+      }
+    ]
+  }
+}"
