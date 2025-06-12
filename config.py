@@ -4,7 +4,7 @@ import os
 _ = load_dotenv(find_dotenv())
 
 # Zero-Shot Prompting
-standard_prompt = '''Answer the following question with a single, clear sentence. 
+standard_prompt = '''Answer the following question with clear sentences. 
 Avoid elaboration or unnecessary details.
 Question: {question}
 Answer:'''
@@ -15,7 +15,7 @@ cot_prompt = '''Answer the following question using a step-by-step reasoning app
 Follow these guidelines:
 - Identify the main entities in the question.
 - Determine their relationships and relevant knowledge.
-- Conclude with a concise sentence that directly answers the question.
+- Conclude with concise sentences that directly answers the question.
 
 Question: {question}
 Answer:'''
@@ -23,6 +23,36 @@ Answer:'''
 instruction = "You are an advanced model specializing in question answering."
 
 prompt_list = {"standard_prompt": standard_prompt, "cot_prompt": cot_prompt}
+
+# Zero-Shot Prompting
+standard_prompt_african = '''Answer the following question with clear sentences. 
+Avoid elaboration or unnecessary details.
+Focus only on the African wild context when answering.
+
+Question: {question}
+Answer:'''
+
+
+prompt_african_list = {"standard_prompt": standard_prompt_african}
+
+
+# Zero-Shot Prompting
+standard_prompt_african_onto = '''Answer the following question with clear sentences. 
+Avoid elaboration or unnecessary details.
+
+Question: {question}
+Answer:'''
+
+onto_instruction = """You are an advanced model specializing in question answering. 
+
+Use the following African wild ontologh:
+
+{ontology}
+"""
+
+
+prompt_african_list_onto = {"standard_prompt": standard_prompt_african_onto}
+
 
 models_list = [
     "meta-llama/Llama-3.2-1B-Instruct",
